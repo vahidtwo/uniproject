@@ -18,15 +18,15 @@ devices connect with TCP/IP Socket connection together.
 * Jumper wire
 * Breadboard
 * Capacitor (1μF 50v)
-* photocell
+* Photocell
 * RFID RC522
 * DHT11
 * RFID tag
 * RGB LED
 * RaspberryPi 3 
 * 2 LED
-* android Phone
-* wireless modem 
+* Android Phone
+* Wireless modem 
 
 ####  HAVE FUN :D
  
