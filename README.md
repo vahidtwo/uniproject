@@ -25,6 +25,7 @@ devices connect with TCP/IP Socket connection together.
 * RGB LED
 * RaspberryPi 3 
 * 2 LED
+* Some resistance
 * Android Phone
 * Wireless modem 
 
