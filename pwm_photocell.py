@@ -3,7 +3,7 @@ import time
 import socket
 import os
 
-led_pin = 22
+led_pin = 18
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(led_pin, GPIO.OUT)
 pin_to_circuit = 38
