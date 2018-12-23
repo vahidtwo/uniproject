@@ -1,7 +1,7 @@
 # uniproject
 ## simple smart home 
 This is my univercity project that run in raspberry pi 3 and adnroid platform. 
-My devices connect with TCP/IP Socket connection together
+devices connect with TCP/IP Socket connection together.
 ###  This project has 3 sensor : 
   * DHT11 
   * RFID RC522
@@ -13,6 +13,20 @@ My devices connect with TCP/IP Socket connection together
   * Who use RFID tag . If vahid or ali enter alert otherwise alert with police siren
   
   and set an LED on/off on Raspberry :D
-  
+
+## Accessories
+* Jumper wire
+* Breadboard
+* Capacitor (1μF 50v)
+* photocell
+* RFID RC522
+* DHT11
+* RFID tag
+* RGB LED
+* RaspberryPi 3 
+* 2 LED
+* android Phone
+* wireless modem 
+
 ####  HAVE FUN :D
  
