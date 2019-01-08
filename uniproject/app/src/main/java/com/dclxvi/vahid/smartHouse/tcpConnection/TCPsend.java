@@ -1,4 +1,4 @@
-package com.dclxvi.vahid.uniproject1.tcpConnection;
+package com.dclxvi.vahid.smartHouse.tcpConnection;
 
 import android.os.AsyncTask;
 import android.util.Log;

@@ -1,4 +1,4 @@
-package com.dclxvi.vahid.uniproject1;
+package com.dclxvi.vahid.smartHouse;
 
 import android.content.Intent;
 import android.os.Bundle;

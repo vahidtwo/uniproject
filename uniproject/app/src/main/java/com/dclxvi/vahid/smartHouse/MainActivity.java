@@ -1,4 +1,4 @@
-package com.dclxvi.vahid.uniproject1;
+package com.dclxvi.vahid.smartHouse;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,8 +10,8 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.dclxvi.vahid.uniproject1.tcpConnection.TCPresive;
-import com.dclxvi.vahid.uniproject1.tcpConnection.TCPsend;
+import com.dclxvi.vahid.smartHouse.tcpConnection.TCPresive;
+import com.dclxvi.vahid.smartHouse.tcpConnection.TCPsend;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
   String IP = "192.168.88.225";
   private String temp = "";
+  private String lampStatus = "False";
   private String humidity = "";
   private String cpu_tmp = "";
   private String photocell = "";
@@ -45,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
   private String rfidid = "";
 
   private Thread serverThread;
-
 
   @Override
   protected void onDestroy() {
@@ -87,11 +87,14 @@ public class MainActivity extends AppCompatActivity {
 
     Log.i("test", "TCPS started");
     Log.i("test", "TCPc starting");
+    new TCPsend().setIP(IP).setMessage("getstate").setPort(port).start();
+    Log.i("test", "getstatus1");
+
     swchLED_Status.setOnCheckedChangeListener(
       new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-          Log.i("sendTread", "in main port: " + port + " ip: " + IP);
+          Log.i("test", "in main port: " + port + " ip: " + IP);
 
           new TCPsend().setIP(IP).setMessage(isChecked).setPort(port).start();
           if (isChecked)
@@ -146,12 +149,13 @@ public class MainActivity extends AppCompatActivity {
                     txtTemp.setText(monitor.temp + "");
                   temp = monitor.temp;
                 }
+
                 synchronized (monitor.rfidtext) {
                   synchronized (monitor.rfidid) {
                     if (!rfidname.equals(monitor.rfidtext) && !monitor.rfidtext.equals("no One")) {
                       String tempulate = String.valueOf(txtWho.getText());
-                      String msg ="\nshakhse : " + monitor.rfidtext + "ba idCard :" + monitor.rfidid + " vared shod";
-                      new myalert(context,msg);
+                      String msg = "\nshakhse : " + monitor.rfidtext + "ba idCard :" + monitor.rfidid + " vared shod";
+                      new myalert(context, msg);
                       txtWho.setText(tempulate + msg);
                       rfidname = monitor.rfidtext;
                       rfidid = monitor.rfidid;
@@ -177,6 +181,44 @@ public class MainActivity extends AppCompatActivity {
             });
 
           }
+          try {
+            Thread.sleep(50);
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
+        }
+      }
+    }).start();
+    new Thread(new Runnable() {
+      @Override
+      public void run() {
+        while (true) {
+          if (!lampStatus.equals(monitor.lampStatus)) {
+            synchronized (monitor.lampStatus) {
+              if (!lampStatus.equals(monitor.lampStatus)) {
+                handler.post(new Runnable() {
+                  @Override
+                  public void run() {
+
+                    if (lampStatus.equals("False"))
+                      swchLED_Status.setChecked(true);
+                    else
+                      swchLED_Status.setChecked(false);
+                  }
+                });
+
+                lampStatus = monitor.lampStatus;
+              }
+            }
+          }
+          try {
+            Thread.sleep(1000);
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
+          Log.i("test", "getstatus");
+          new TCPsend().setIP(IP).setMessage("getstate").setPort(port).start();
+          Log.i("test", "getstate");
 
         }
       }
@@ -187,53 +229,3 @@ public class MainActivity extends AppCompatActivity {
     return connectionStatus;
   }
 }
-
-
-//    class TCPsend extends AsyncTask<Void, Void, Void> {
-//      String ip = "192.168.88.231";
-//      String massage;
-//      int port = 16662;
-//
-//
-//      private Socket socket;
-//      private PrintWriter pw;
-//
-//      @Override
-//      protected Void doInBackground(Void... params) {
-//        try {
-//          socket = new Socket(ip, port);
-//          pw = new PrintWriter(socket.getOutputStream());
-//          pw.write(massage);
-//          pw.flush();
-//          pw.close();
-//          socket.close();
-//
-//        } catch (UnknownHostException e) {
-//          e.printStackTrace();
-//        } catch (IOException e) {
-//          e.printStackTrace();
-//        }
-//
-//        return null;
-//      }
-//      public void start() {
-//        this.execute();
-//        Log.i("test", "THread start");
-//      }
-//
-//      public TCPsend setIP(String IP) {
-//        this.ip = IP;
-//        return this;
-//      }
-//
-//      public TCPsend setPort(int port) {
-//        this.port = port;
-//        return this;
-//      }
-//      public TCPsend setMessage(String massage) {
-//        this.massage  = massage;
-//        return this;
-//      }
-//
-//  }
-

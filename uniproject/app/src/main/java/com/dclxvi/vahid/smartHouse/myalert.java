@@ -1,4 +1,4 @@
-package com.dclxvi.vahid.uniproject1;
+package com.dclxvi.vahid.smartHouse;
 
 import android.app.AlertDialog;
 import android.content.Context;
